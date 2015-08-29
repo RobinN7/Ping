@@ -1,2 +1,6 @@
+ping
+
+src/*.o
+
 # Makefile
 Makefile
