@@ -1,4 +1,6 @@
 CXX = g++
+CFLAGS = -std=gnu++11
+
 LIBS=-lsfml-graphics -lsfml-window -lsfml-system
 
 SRCS = src/main.cpp
@@ -17,5 +19,5 @@ clean:
 	rm -f ping $(OBJS)
 
 %.o: %.cpp
-	$(CXX) -c $< -o $@
+	$(CXX) -c $< $(CFLAGS) -o $@
 

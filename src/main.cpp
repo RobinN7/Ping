@@ -5,14 +5,30 @@
  *      Author: robin
  */
 
-
 #include <SFML/Graphics.hpp>
+#include <math.h>
+#include <iostream>       // std::cout
+#include <thread>         // std::thread
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(200,200),"TestWindow");
-	sf::CircleShape ball(50.f);
-	ball.setFillColor(sf::Color::Blue);
+	sf::RenderWindow window(sf::VideoMode(800,600),"TestWindow");
+
+	sf::Clock clock;
+	sf::Time elapsed = clock.getElapsedTime();
+
+	sf::Texture catTexture;
+ 	if (!catTexture.loadFromFile("img/cat.png"))
+	{
+ 		std::cout<<"Error loading cat.png";
+	}
+ 	catTexture.setSmooth(true);
+ 	sf::Sprite catSprite;
+ 	catSprite.setTexture(catTexture);
+ 	catSprite.move(50,64);
+ 	catSprite.setOrigin(50,64);
+
+ 	unsigned int angle=0;
 
 	while (window.isOpen())
 	{
@@ -24,8 +40,15 @@ int main()
 				window.close();
 		}
 		window.clear();
-		window.draw(ball);
+		window.draw(catSprite);
 		window.display();
 
+		elapsed = clock.getElapsedTime();
+		if (elapsed.asMilliseconds()>=20)
+		{
+			catSprite.move(1,1);
+			catSprite.rotate(sqrt(angle++));
+			clock.restart();
+		}
 	}
 }
