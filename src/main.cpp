@@ -11,6 +11,7 @@
 #include <iostream>       // std::cout
 #include <thread>         // std::thread
 
+#include "../include/music.hpp"
 
 void keyboardEvents()
 {
@@ -24,11 +25,7 @@ int main()
 	sf::Clock clock;
 	sf::Time millis = clock.getElapsedTime();
 
-	sf::Music music;
-	if (!music.openFromFile("sound/music.wav"))
- 		std::cout<<"Error opening music.wav";
-	music.setLoop(true);
-	music.play();
+	GameMusic music;
 
     sf::SoundBuffer buffer;
     if (!buffer.loadFromFile("sound/blblbl.wav"))
@@ -89,10 +86,6 @@ int main()
         	}
         }
 
-		
-
- 
-
 
 		window.clear();
 		window.draw(backSprite);
@@ -100,33 +93,32 @@ int main()
 		window.display();
 
 		millis = clock.getElapsedTime();
-
 		
 
-		if (millis.asMilliseconds()>=1)
+		if (millis.asMilliseconds()>=10)
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			{
-				catSprite.move(-10,0);
-				view.move(-10, 0);
+				catSprite.move(-5,0);
+				view.move(-5, 0);
 				window.setView(view);
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
-				catSprite.move(10,0);
-				view.move(10, 0);
+				catSprite.move(5,0);
+				view.move(5, 0);
 				window.setView(view);
 		}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-			{	catSprite.move(0,-10);
-				view.move(0, -10);
+			{	catSprite.move(0,-5);
+				view.move(0, -5);
 				window.setView(view);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			{
-				catSprite.move(0,10);
-				view.move(0, 10);
+				catSprite.move(0,5);
+				view.move(0, 5);
 				window.setView(view);
 			}
 		}
