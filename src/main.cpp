@@ -6,6 +6,7 @@
  */
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <math.h>
 #include <iostream>       // std::cout
 #include <thread>         // std::thread
@@ -22,8 +23,18 @@ int main()
 
 	sf::Clock clock;
 	sf::Time millis = clock.getElapsedTime();
-	sf::Time rotationTemp = clock.getElapsedTime();
 
+	sf::Music music;
+	if (!music.openFromFile("sound/music.wav"))
+ 		std::cout<<"Error opening music.wav";
+	music.setLoop(true);
+	music.play();
+
+    sf::SoundBuffer buffer;
+    if (!buffer.loadFromFile("sound/blblbl.wav"))
+ 		std::cout<<"Error opening music.wav";
+    sf::Sound blblblSound;
+    blblblSound.setBuffer(buffer);
 
 	sf::Texture backTexture;
 	if (!backTexture.loadFromFile("img/back.png"))
@@ -54,8 +65,18 @@ int main()
 
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
+        	switch (event.type)
+        	{
+        	case sf::Event::Closed:
                 window.close();
+                break;
+        	case sf::Event::KeyPressed:
+        		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
+					sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
+					sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ||
+					sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        			blblblSound.play();
+        	}
         }
 
 		window.clear();
@@ -74,13 +95,6 @@ int main()
 				catSprite.move(0,-1);
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 				catSprite.move(0,1);
-		}
-
-		rotationTemp = clock.getElapsedTime();
-		if (rotationTemp.asMilliseconds()>=50)
-		{
-			catSprite.rotate(sqrt(angle++));
-			clock.restart();
 		}
 	}
 }
