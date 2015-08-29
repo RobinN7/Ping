@@ -6,17 +6,25 @@
  */
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <math.h>
 #include <iostream>       // std::cout
 #include <thread>         // std::thread
 
+#include "../include/music.hpp"
+
 // **************************************************************************************
 
-int resWidth;
-int resHeight;
+
 
 // ************************************************************************************** 
 
+
+
+
+
+int resWidth;
+int resHeight;
 
 void keyboardEvents()
 {
@@ -36,7 +44,14 @@ int main()
 
 	sf::Clock clock;
 	sf::Time millis = clock.getElapsedTime();
-	sf::Time rotationTemp = clock.getElapsedTime();
+
+	GameMusic music;
+
+    sf::SoundBuffer buffer;
+    if (!buffer.loadFromFile("sound/blblbl.wav"))
+ 		std::cout<<"Error opening music.wav";
+    sf::Sound blblblSound;
+    blblblSound.setBuffer(buffer);
 
 	sf::View view(sf::Vector2f(resWidth/2, resHeight/2), sf::Vector2f(resWidth, resHeight));
 	window.setView(view);
@@ -77,11 +92,21 @@ int main()
 
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
+        	switch (event.type)
+        	{
+        	case sf::Event::Closed:
                 window.close();
+                break;
+        	case sf::Event::KeyPressed:
+        		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
+					sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
+					sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ||
+					sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        			blblblSound.play();
+        	}
         }
 
-		
+
 		window.clear();
 		window.draw(backSprite);
 		window.draw(catSprite);
@@ -90,7 +115,7 @@ int main()
 		millis = clock.getElapsedTime();
 
 
-		if (millis.asMilliseconds()>=1)
+		if (millis.asMilliseconds()>=10)
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			{
@@ -104,6 +129,7 @@ int main()
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
+
 				if(catSprite.getPosition().x<5*resWidth)
 					catSprite.move(10,0);
 
@@ -138,5 +164,6 @@ int main()
 		}
 
 		clock.restart();
+
 	}
 }
