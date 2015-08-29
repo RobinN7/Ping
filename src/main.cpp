@@ -97,7 +97,7 @@ int main()
 				if(catSprite.getPosition().x>0)
 					catSprite.move(-10,0);
 				
-				if(catSprite.getPosition().x>960)
+				if(catSprite.getPosition().x>960 && catSprite.getPosition().x<8640)
 					view.move(-10, 0);
 				
 			}
@@ -107,7 +107,7 @@ int main()
 				if(catSprite.getPosition().x<5*resWidth)
 					catSprite.move(10,0);
 
-				if(catSprite.getPosition().x<8640)
+				if(catSprite.getPosition().x>960 && catSprite.getPosition().x<8640)
 					view.move(10, 0);
 				
 		}
@@ -116,7 +116,7 @@ int main()
 				if(catSprite.getPosition().y>0)
 					catSprite.move(0,-10);
 				
-				if(catSprite.getPosition().y<540)
+				if(catSprite.getPosition().y>resHeight/4 && catSprite.getPosition().y<3*resHeight/4)
 					view.move(0, -10);
 				
 			}
@@ -125,7 +125,7 @@ int main()
 				if(catSprite.getPosition().y<resHeight)
 					catSprite.move(0,10);
 				
-				if(catSprite.getPosition().y>540)
+				if(catSprite.getPosition().y>resHeight/4 && catSprite.getPosition().y<3*resHeight/4)
 				{
 					view.move(0, 10);
 				}
