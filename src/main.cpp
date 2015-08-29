@@ -24,14 +24,25 @@ int main()
 	sf::Time millis = clock.getElapsedTime();
 	sf::Time rotationTemp = clock.getElapsedTime();
 
+
+	sf::Texture backTexture;
+	if (!backTexture.loadFromFile("img/back.png"))
+ 		std::cout<<"Error loading back.png";
+
 	sf::Texture catTexture;
  	if (!catTexture.loadFromFile("img/cat.png"))
-	{
  		std::cout<<"Error loading cat.png";
-	}
+
+
  	catTexture.setSmooth(true);
+ 	backTexture.setSmooth(true);
+
+ 	sf::Sprite backSprite;
  	sf::Sprite catSprite;
+
+ 	backSprite.setTexture(backTexture);
  	catSprite.setTexture(catTexture);
+
  	catSprite.move(50,64);
  	catSprite.setOrigin(50,64);
 
@@ -48,6 +59,7 @@ int main()
         }
 
 		window.clear();
+		window.draw(backSprite);
 		window.draw(catSprite);
 		window.display();
 
