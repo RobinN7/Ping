@@ -10,12 +10,19 @@
 #include <iostream>       // std::cout
 #include <thread>         // std::thread
 
+
+void keyboardEvents()
+{
+
+}
+
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(800,600),"TestWindow");
 
 	sf::Clock clock;
-	sf::Time elapsed = clock.getElapsedTime();
+	sf::Time millis = clock.getElapsedTime();
+	sf::Time rotationTemp = clock.getElapsedTime();
 
 	sf::Texture catTexture;
  	if (!catTexture.loadFromFile("img/cat.png"))
@@ -34,19 +41,32 @@ int main()
 	{
 		sf::Event event;
 
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				window.close();
-		}
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+
 		window.clear();
 		window.draw(catSprite);
 		window.display();
 
-		elapsed = clock.getElapsedTime();
-		if (elapsed.asMilliseconds()>=20)
+		millis = clock.getElapsedTime();
+		if (millis.asMilliseconds()>=1)
 		{
-			catSprite.move(1,1);
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+				catSprite.move(-1,0);
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+				catSprite.move(1,0);
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+				catSprite.move(0,-1);
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+				catSprite.move(0,1);
+		}
+
+		rotationTemp = clock.getElapsedTime();
+		if (rotationTemp.asMilliseconds()>=50)
+		{
 			catSprite.rotate(sqrt(angle++));
 			clock.restart();
 		}
