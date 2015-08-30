@@ -15,6 +15,7 @@
 #include "../include/AnimatedSprite.hpp"
 
 
+
 // **************************************************************************************
 
 int resWidth = 1920;
@@ -23,33 +24,22 @@ int resHeight = 1080;
 // ************************************************************************************** 
 
 
-<<<<<<< HEAD
 int main()
 {
 
 	/*std::cout<<"Resolution horizontale : ";
 	std::cin>>resWidth;
-	std::cout<<"Resolution verticale : ";
 	std::cin>>resHeight;*/
 
 	sf::Vector2i screenDimensions(resWidth,resHeight);
-	sf::RenderWindow window(sf::VideoMode(resWidth, resHeight),"TestWindow");
-=======
-
 
 
 int resWidth=1920;
 int resHeight=1080;
 
-void keyboardEvents()
-{
 
-}
-
-int main()
-{
 	sf::RenderWindow window(sf::VideoMode(resWidth, resHeight),"Ping");
->>>>>>> 8dc362857ac7868e2b872456c27d9e75602eb963
+
 
 	sf::Clock clock;
 	sf::Time millis = clock.getElapsedTime();
@@ -73,16 +63,13 @@ int main()
 	if (!backTexture.loadFromFile("img/back2.png"))
  		std::cout<<"Error loading back2.png";
 
-<<<<<<< HEAD
- 	sf::Texture playerTexture;
-	if(!playerTexture.loadFromFile("img/player2.png"))
-		std::cout<<"Error loading player2.png";
 
-=======
+
+
 	sf::Texture playerTexture;
  	if (!playerTexture.loadFromFile("img/player.png"))
  		std::cout<<"Error loading player.png";
->>>>>>> 8dc362857ac7868e2b872456c27d9e75602eb963
+
 
 
  	playerTexture.setSmooth(true);
@@ -141,23 +128,23 @@ int main()
  	backTexture.setRepeated(true);
 
  	sf::Sprite backSprite;
-<<<<<<< HEAD
-=======
+
+
  	sf::Sprite playerSprite;
->>>>>>> 8dc362857ac7868e2b872456c27d9e75602eb963
+
 
  	backSprite.setTextureRect(sf::IntRect(0, 0, 5*resWidth, resHeight));
 
  	backSprite.setTexture(backTexture);
-<<<<<<< HEAD
-=======
+
+
  	playerSprite.setTexture(playerTexture);
 
  	playerSprite.move(resWidth/2, resHeight/2);
  	playerSprite.setOrigin(50,64);
 
  	unsigned int angle=0;
->>>>>>> 8dc362857ac7868e2b872456c27d9e75602eb963
+
 
 
 	while (window.isOpen())
@@ -183,20 +170,16 @@ int main()
         }
 
 
-<<<<<<< HEAD
+
         sf::Time frameTime = frameClock.restart();
 
 		
-=======
-		window.clear();
-		window.draw(backSprite);
-		window.draw(playerSprite);
-		window.display();
->>>>>>> 8dc362857ac7868e2b872456c27d9e75602eb963
+		
+
 
 		//millis = clock.getElapsedTime();
 
-<<<<<<< HEAD
+
 
 		/*if (millis.asMilliseconds()>=10)
 		{
@@ -206,7 +189,7 @@ int main()
 					catSprite.move(-10,0);
 				
 				if(catSprite.getPosition().x>resWidth/2 && catSprite.getPosition().x<8640)
-=======
+
 		if (millis.asMilliseconds()>=10)
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
@@ -216,12 +199,11 @@ int main()
 
 
 				if(playerSprite.getPosition().x>resWidth/2 && playerSprite.getPosition().x<8640)
->>>>>>> 8dc362857ac7868e2b872456c27d9e75602eb963
 					view.move(-10, 0);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
-<<<<<<< HEAD
+
 				if(catSprite.getPosition().x<5*resWidth)
 					catSprite.move(10,0);
 
@@ -229,14 +211,14 @@ int main()
 					view.move(10, 0);	
 			}
 
-=======
+
 				if(playerSprite.getPosition().x<5*resWidth)
 					playerSprite.move(10,0);
 
 				if(playerSprite.getPosition().x>960 && playerSprite.getPosition().x<8640)
 					view.move(10, 0);
 			}
->>>>>>> 8dc362857ac7868e2b872456c27d9e75602eb963
+
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 			{	
 				if(playerSprite.getPosition().y>0)
@@ -278,47 +260,52 @@ int main()
             movement.y -= speed;
             noKeyWasPressed = false;
         }
+    
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
         {
             currentAnimation = &walkingAnimationDown;
             movement.y += speed;
             noKeyWasPressed = false;
         }
+    
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
         {
             currentAnimation = &walkingAnimationLeft;
             movement.x -= speed;
             noKeyWasPressed = false;
         }
+    
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
         {
             currentAnimation = &walkingAnimationRight;
             movement.x += speed;
             noKeyWasPressed = false;
         }
+
+        if (noKeyWasPressed)
+        {
+         	currentAnimation = &idleAnimation;  
+        }
+
+        noKeyWasPressed = true;
+
         animatedSprite.play(*currentAnimation);
         animatedSprite.move(movement * frameTime.asSeconds());
 
-        // if no key was pressed stop the animation
-        if (noKeyWasPressed)
-        {
-            animatedSprite.stop();
-        }
-        noKeyWasPressed = true;
 
         // update AnimatedSprite
         animatedSprite.update(frameTime);
 
-<<<<<<< HEAD
+
         // draw
         window.clear();
         window.draw(backSprite);
         window.draw(animatedSprite);
         window.display();
     }
-=======
 
->>>>>>> 8dc362857ac7868e2b872456c27d9e75602eb963
+
+
 
 	
 }
