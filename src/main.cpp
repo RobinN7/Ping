@@ -23,8 +23,8 @@
 
 
 
-int resWidth;
-int resHeight;
+int resWidth=1920;
+int resHeight=1080;
 
 void keyboardEvents()
 {
@@ -33,14 +33,7 @@ void keyboardEvents()
 
 int main()
 {
-
-	std::cout<<"Resolution horizontale : ";
-	std::cin>>resWidth;
-	std::cout<<"Resolution verticale : ";
-	std::cin>>resHeight;
-
-
-	sf::RenderWindow window(sf::VideoMode(resWidth, resHeight),"TestWindow");
+	sf::RenderWindow window(sf::VideoMode(resWidth, resHeight),"Ping");
 
 	sf::Clock clock;
 	sf::Time millis = clock.getElapsedTime();
@@ -62,26 +55,26 @@ int main()
 	if (!backTexture.loadFromFile("img/back2.png"))
  		std::cout<<"Error loading back2.png";
 
-	sf::Texture catTexture;
- 	if (!catTexture.loadFromFile("img/cat.png"))
- 		std::cout<<"Error loading cat.png";
+	sf::Texture playerTexture;
+ 	if (!playerTexture.loadFromFile("img/player.png"))
+ 		std::cout<<"Error loading player.png";
 
 
- 	catTexture.setSmooth(true);
+ 	playerTexture.setSmooth(true);
  	backTexture.setSmooth(true);
 
  	backTexture.setRepeated(true);
 
  	sf::Sprite backSprite;
- 	sf::Sprite catSprite;
+ 	sf::Sprite playerSprite;
 
  	backSprite.setTextureRect(sf::IntRect(0, 0, 5*resWidth, resHeight));
 
  	backSprite.setTexture(backTexture);
- 	catSprite.setTexture(catTexture);
+ 	playerSprite.setTexture(playerTexture);
 
- 	catSprite.move(resWidth/2, resHeight/2);
- 	catSprite.setOrigin(50,64);
+ 	playerSprite.move(resWidth/2, resHeight/2);
+ 	playerSprite.setOrigin(50,64);
 
  	unsigned int angle=0;
 
@@ -109,61 +102,58 @@ int main()
 
 		window.clear();
 		window.draw(backSprite);
-		window.draw(catSprite);
+		window.draw(playerSprite);
 		window.display();
 
 		millis = clock.getElapsedTime();
-
 
 		if (millis.asMilliseconds()>=10)
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			{
-				if(catSprite.getPosition().x>0)
-					catSprite.move(-10,0);
-				
-				if(catSprite.getPosition().x>960 && catSprite.getPosition().x<8640)
-					view.move(-10, 0);
-				
-			}
+				if(playerSprite.getPosition().x>0)
+					playerSprite.move(-10,0);
 
+
+				if(playerSprite.getPosition().x>resWidth/2 && playerSprite.getPosition().x<8640)
+					view.move(-10, 0);
+			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
+				if(playerSprite.getPosition().x<5*resWidth)
+					playerSprite.move(10,0);
 
-				if(catSprite.getPosition().x<5*resWidth)
-					catSprite.move(10,0);
-
-				if(catSprite.getPosition().x>960 && catSprite.getPosition().x<8640)
+				if(playerSprite.getPosition().x>960 && playerSprite.getPosition().x<8640)
 					view.move(10, 0);
-				
-		}
+			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 			{	
-				if(catSprite.getPosition().y>0)
-					catSprite.move(0,-10);
+				if(playerSprite.getPosition().y>0)
+					playerSprite.move(0,-10);
 				
-				if(catSprite.getPosition().y>resHeight/4 && catSprite.getPosition().y<3*resHeight/4)
+				if(playerSprite.getPosition().y>resHeight/4 && playerSprite.getPosition().y<3*resHeight/4)
 					view.move(0, -10);
 				
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			{
-				if(catSprite.getPosition().y<resHeight)
-					catSprite.move(0,10);
+				if(playerSprite.getPosition().y<resHeight)
+					playerSprite.move(0,10);
 				
-				if(catSprite.getPosition().y>resHeight/4 && catSprite.getPosition().y<3*resHeight/4)
+				if(playerSprite.getPosition().y>resHeight/4 && playerSprite.getPosition().y<3*resHeight/4)
 				{
 					view.move(0, 10);
 				}
 				
 			}
+			clock.restart();
 
 			window.setView(view);
 
 
 		}
 
-		clock.restart();
+
 
 	}
 }
