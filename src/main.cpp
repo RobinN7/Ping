@@ -11,6 +11,7 @@
 #include <iostream>       // std::cout
 #include <thread>         // std::thread
 
+#include "../include/player.hpp"
 #include "../include/music.hpp"
 #include "../include/AnimatedSprite.hpp"
 
@@ -33,11 +34,6 @@ int main()
 
 	sf::Vector2i screenDimensions(resWidth,resHeight);
 
-
-int resWidth=1920;
-int resHeight=1080;
-
-
 	sf::RenderWindow window(sf::VideoMode(resWidth, resHeight),"Ping");
 
 
@@ -57,20 +53,11 @@ int resHeight=1080;
 
 	view.setCenter(resWidth/2, resHeight/2);
 
-
+    Player player;
 
 	sf::Texture backTexture;
 	if (!backTexture.loadFromFile("img/back2.png"))
  		std::cout<<"Error loading back2.png";
-
-
-	sf::Texture playerTexture;
- 	if (!playerTexture.loadFromFile("img/player.png"))
- 		std::cout<<"Error loading player.png";
-
-
-
- 	playerTexture.setSmooth(true);
  	backTexture.setSmooth(true);
 
 
