@@ -60,58 +60,8 @@ int main()
  		std::cout<<"Error loading back2.png";
  	backTexture.setSmooth(true);
 
-
- 	Animation idleAnimation;
- 	idleAnimation.setSpriteSheet(playerTexture);
- 	idleAnimation.addFrame(sf::IntRect(300,0,100,100));
- 	idleAnimation.addFrame(sf::IntRect(400,0,100,100));
- 	idleAnimation.addFrame(sf::IntRect(500,0,100,100));
- 	idleAnimation.addFrame(sf::IntRect(300,100,100,100));
- 	idleAnimation.addFrame(sf::IntRect(400,100,100,100));
- 	idleAnimation.addFrame(sf::IntRect(500,100,100,100));
- 	idleAnimation.addFrame(sf::IntRect(300,200,100,100));
- 	idleAnimation.addFrame(sf::IntRect(400,200,100,100));
- 	idleAnimation.addFrame(sf::IntRect(500,200,100,100));
- 	idleAnimation.addFrame(sf::IntRect(400,200,100,100));
- 	idleAnimation.addFrame(sf::IntRect(300,200,100,100));
-	idleAnimation.addFrame(sf::IntRect(500,100,100,100));
-	idleAnimation.addFrame(sf::IntRect(400,100,100,100));
-	idleAnimation.addFrame(sf::IntRect(300,100,100,100));
-	idleAnimation.addFrame(sf::IntRect(500,0,100,100));
- 	idleAnimation.addFrame(sf::IntRect(400,0,100,100));
- 	idleAnimation.addFrame(sf::IntRect(300,0,100,100));
-
-    Animation walkingAnimationDown;
-    walkingAnimationDown.setSpriteSheet(playerTexture);
-    walkingAnimationDown.addFrame(sf::IntRect(300, 0, 100, 100));
-    walkingAnimationDown.addFrame(sf::IntRect(400, 0, 100, 100));
-
-    Animation walkingAnimationLeft;
-    walkingAnimationLeft.setSpriteSheet(playerTexture);
-    walkingAnimationLeft.addFrame(sf::IntRect(200, 0, 100, 100));
-    walkingAnimationLeft.addFrame(sf::IntRect(100, 0, 100, 100));
-    walkingAnimationLeft.addFrame(sf::IntRect(0, 0, 100, 100));
-    walkingAnimationLeft.addFrame(sf::IntRect(100, 0, 100, 100));
-    walkingAnimationLeft.addFrame(sf::IntRect(200, 0, 100, 100));    
-
-    Animation walkingAnimationRight;
-    walkingAnimationRight.setSpriteSheet(playerTexture);
-    walkingAnimationRight.addFrame(sf::IntRect(600, 0, 100, 100));
-    walkingAnimationRight.addFrame(sf::IntRect(700, 0, 100, 100));
-    walkingAnimationRight.addFrame(sf::IntRect(800, 0, 100, 100));
-    walkingAnimationRight.addFrame(sf::IntRect(700, 0, 100, 100));
-    walkingAnimationRight.addFrame(sf::IntRect(600, 0, 100, 100));
-
-    Animation walkingAnimationUp;
-    walkingAnimationUp.setSpriteSheet(playerTexture);
-    walkingAnimationUp.addFrame(sf::IntRect(300, 0, 100, 100));
-    walkingAnimationUp.addFrame(sf::IntRect(400, 0, 100, 100));
-
-
-    Animation* currentAnimation = &walkingAnimationDown;
-
     // set up AnimatedSprite
-    AnimatedSprite animatedSprite(sf::seconds(0.2), true, false);
+    AnimatedSprite animatedSprite(sf::seconds(0.1), true, false);
     animatedSprite.setPosition(sf::Vector2f(screenDimensions / 2));
     animatedSprite.setOrigin(50,50);
 
@@ -160,7 +110,7 @@ int main()
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
         {
-            currentAnimation = &walkingAnimationUp;
+            player.currentAnimation = player.walkingAnimationUp;
             
             if(animatedSprite.getPosition().y>0)
             	movement.y -= speed;
@@ -173,7 +123,7 @@ int main()
     
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
         {
-            currentAnimation = &walkingAnimationDown;
+            player.currentAnimation = player.walkingAnimationDown;
 
             if(animatedSprite.getPosition().y<resHeight)
             	movement.y += speed;
@@ -186,7 +136,7 @@ int main()
     
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
         {
-            currentAnimation = &walkingAnimationLeft;
+        	player.currentAnimation = player.walkingAnimationLeft;
 
             if(animatedSprite.getPosition().x>0)
             	movement.x -= speed;
@@ -199,7 +149,7 @@ int main()
     
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
         {
-            currentAnimation = &walkingAnimationRight;
+        	player.currentAnimation = player.walkingAnimationRight;
 
             if(animatedSprite.getPosition().x<5*resWidth)
             	movement.x += speed;
@@ -212,7 +162,7 @@ int main()
 
         if (noKeyWasPressed)
         {
-         	currentAnimation = &idleAnimation;  
+        	player.currentAnimation = player.idleAnimation;
         }
 
 
@@ -220,8 +170,8 @@ int main()
 
         window.setView(view);
 
-        animatedSprite.play(*currentAnimation);
-        animatedSprite.move(movement * frameTime.asSeconds());
+        animatedSprite.play(*player.currentAnimation);
+        animatedSprite.move(movement *frameTime.asSeconds());
 
 
         // update AnimatedSprite
