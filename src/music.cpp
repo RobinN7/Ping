@@ -11,6 +11,7 @@ GameMusic::GameMusic() : sf::Music()
 {
 	if (!this->openFromFile("sound/music.wav"))
  		std::cout<<"Error opening music.wav";
+ 	
 	this->setLoop(true);
 	this->play();
 }
