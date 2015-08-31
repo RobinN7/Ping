@@ -24,14 +24,8 @@ int resHeight = 1080;
 
 // ************************************************************************************** 
 
-
 int main()
 {
-
-	/*std::cout<<"Resolution horizontale : ";
-	std::cin>>resWidth;
-	std::cin>>resHeight;*/
-
 	sf::Vector2i screenDimensions(resWidth,resHeight);
 
 	sf::RenderWindow window(sf::VideoMode(resWidth, resHeight),"Ping");
@@ -67,9 +61,9 @@ int main()
 
     sf::Clock frameClock;
 
-    float speed = 200.f;
     bool noKeyWasPressed = true;
-
+    char pressedKey='L';
+    char lastPressedKey='L';
 
  	backTexture.setRepeated(true);
  	sf::Sprite backSprite;
@@ -100,79 +94,97 @@ int main()
         				blblblSound.play();*/
         	}
         }
-
-
-
         sf::Time frameTime = frameClock.restart();
 
 		
-        sf::Vector2f movement(0.f, 0.f);
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-        {
-            player.currentAnimation = player.walkingAnimationUp;
-            
-            if(animatedSprite.getPosition().y>0)
-            	movement.y -= speed;
-	
-			if(animatedSprite.getPosition().y>resHeight/4 && animatedSprite.getPosition().y<3*resHeight/4)
-				view.move(0, -1);
-
-            noKeyWasPressed = false;
-        }
-    
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-        {
-            player.currentAnimation = player.walkingAnimationDown;
-
-            if(animatedSprite.getPosition().y<resHeight)
-            	movement.y += speed;
-	
-			if(animatedSprite.getPosition().y>resHeight/4 && animatedSprite.getPosition().y<3*resHeight/4)
-				view.move(0, 1);
-
-            noKeyWasPressed = false;
-        }
-    
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        {
-        	player.currentAnimation = player.walkingAnimationLeft;
-
-            if(animatedSprite.getPosition().x>0)
-            	movement.x -= speed;
-	
-			if(animatedSprite.getPosition().x>resWidth/2 && animatedSprite.getPosition().x<9*resWidth/2)
-				view.move(-1, 0);
-
-            noKeyWasPressed = false;
-        }
-    
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        {
-        	player.currentAnimation = player.walkingAnimationRight;
-
-            if(animatedSprite.getPosition().x<5*resWidth)
-            	movement.x += speed;
-	
-			if(animatedSprite.getPosition().x>resWidth/2 && animatedSprite.getPosition().x<9*resWidth/2)
-				view.move(1, 0);
-
-            noKeyWasPressed = false;
-        }
-
-        if (noKeyWasPressed)
-        {
-        	player.currentAnimation = player.idleAnimation;
-        }
-
-
-        noKeyWasPressed = true;
-
         window.setView(view);
 
-        animatedSprite.play(*player.currentAnimation);
-        animatedSprite.move(movement *frameTime.asSeconds());
+		if(player.position->y<resHeight-40)
+			player.speed->y += 10;
+		else
+			player.speed->y = 0;
+/*
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		{
+			player.currentAnimation = player.walkingAnimationUp;
 
+			if(player.position->y>0)
+				player.speed->y -= (player.speed->y>-5000)*10;
+			else
+				player.speed->y = 0;
+
+			pressedKey='U';
+			noKeyWasPressed = false;
+		}
+*/
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		{
+			player.currentAnimation = player.walkingAnimationDown;
+
+			if(player.position->y<resHeight-40)
+				player.speed->y += (player.speed->y<5000)*10;
+			else
+				player.speed->y = 0;
+
+			pressedKey='D';
+			noKeyWasPressed = false;
+		}
+
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		{
+			player.currentAnimation = player.walkingAnimationLeft;
+
+			if(player.position->x>0)
+				player.speed->x -= (player.speed->x>-5000)*10;
+
+			pressedKey='L';
+			noKeyWasPressed = false;
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		{
+			player.currentAnimation = player.walkingAnimationRight;
+
+			if(player.position->x<5*resWidth)
+				player.speed->x += (player.speed->x<5000)*10;
+
+			pressedKey='R';
+			noKeyWasPressed = false;
+		}
+
+		if (pressedKey!=lastPressedKey)
+		{
+			player.speed->x = 0;
+			player.speed->y = 0;
+		}
+
+		if (noKeyWasPressed)
+		{
+			player.currentAnimation = player.idleAnimation;
+			if (player.position->y>resHeight-50)
+				player.speed->x += -(player.speed->x>0)*20 + (player.speed->x<0)*20;
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		{
+			if(player.position->y>0)
+				player.speed->y = -1000;
+		}
+
+		if(!(0<player.position->x<5*resWidth))
+			player.speed->x = 0;
+
+
+		player.position->x=animatedSprite.getPosition().x;
+		player.position->y=animatedSprite.getPosition().y;
+
+
+
+		lastPressedKey=pressedKey;
+    	noKeyWasPressed = true;
+
+        animatedSprite.play(*player.currentAnimation);
+        animatedSprite.move(*player.speed * frameTime.asSeconds());
 
         // update AnimatedSprite
         animatedSprite.update(frameTime);

@@ -27,6 +27,7 @@ Player::Player()
     walkingAnimationDown->setSpriteSheet(*playerTexture);
     walkingAnimationDown->addFrame(sf::IntRect(300, 0, 100, 100));
     walkingAnimationDown->addFrame(sf::IntRect(400, 0, 100, 100));
+    walkingAnimationDown->addFrame(sf::IntRect(500, 0, 100, 100));
 
     walkingAnimationLeft = new Animation;
     walkingAnimationLeft->setSpriteSheet(*playerTexture);
@@ -48,9 +49,21 @@ Player::Player()
     walkingAnimationUp->setSpriteSheet(*playerTexture);
     walkingAnimationUp->addFrame(sf::IntRect(300, 0, 100, 100));
     walkingAnimationUp->addFrame(sf::IntRect(400, 0, 100, 100));
+    walkingAnimationUp->addFrame(sf::IntRect(500, 0, 100, 100));
 
     currentAnimation = new Animation;
     currentAnimation = this->walkingAnimationDown;
+
+    position = new sf::Vector2f;
+    speed = new sf::Vector2f;
+    acceleration = new sf::Vector2f;
+    this->position->x=1920/2;
+    this->position->y=1080/2;
+    this->speed->x=0;
+    this->speed->y=0;
 }
 
-
+sf::Vector2f Player::getPosition()
+{
+	return *this->position;
+}

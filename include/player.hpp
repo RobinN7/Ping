@@ -28,6 +28,14 @@ class Player
 
 	    Animation *currentAnimation;
 
+	    sf::Vector2f getPosition();
+	    sf::Vector2f getSpeed();
+	    sf::Vector2f getAcceleration();
+	    sf::Vector2f setAcceleration(sf::Vector2f acc);
+
+	    sf::Vector2f  *position;
+	    sf::Vector2f  *speed;
+	    sf::Vector2f  *acceleration;
 };
 
 
