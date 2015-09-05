@@ -22,11 +22,11 @@
 #include "../include/cscreen.hpp"
 
 
-class menu : public cScreen
+class Menu : public cScreen
 {
     public:
 
-    	menu();
+    	Menu();
     	virtual int Run(sf::RenderWindow &window);
 };
 

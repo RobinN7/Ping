@@ -3,12 +3,12 @@
 
 #include "../include/menu.hpp"
 
-menu::menu()
+Menu::Menu()
 {
 	
 }
 
-int menu::Run(sf::RenderWindow &window)
+int Menu::Run(sf::RenderWindow &window)
 {
 
 	bool Running = true;

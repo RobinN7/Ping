@@ -31,7 +31,7 @@ int main()
     //Screens preparations
     splashScreen splash1;
     Screens.push_back(&splash1);
-    menu menu1;
+    Menu menu1;
     Screens.push_back(&menu1);
     Game Jeu1;
     Screens.push_back(&Jeu1);
