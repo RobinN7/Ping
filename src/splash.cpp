@@ -38,10 +38,7 @@ int splashScreen::Run(sf::RenderWindow &window)
                 break;
 
         	case sf::Event::KeyPressed:
-        		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
-					sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
-					sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ||
-					sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
         				return 1;
         	}
         }

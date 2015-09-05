@@ -25,7 +25,7 @@ int menu::Run(sf::RenderWindow &window)
  	backSprite.setTextureRect(sf::IntRect(0, 0, resWidth, resHeight));
  	backSprite.setTexture(backTexture);
  	
- 	int prevState = 0;
+ 	bool selection = true;
 
 	while (Running)
 	{
@@ -39,12 +39,36 @@ int menu::Run(sf::RenderWindow &window)
         	case sf::Event::Closed:
                 return (-1);
                 break;
+
+        	case sf::Event::KeyPressed:
+        		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+                {
+                	backSprite.setTextureRect(sf::IntRect(1920, 0, resWidth, resHeight));
+ 					backSprite.setTexture(backTexture);
+ 					selection = true;
+                }
+            	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+                {
+                	backSprite.setTextureRect(sf::IntRect(3840, 0, resWidth, resHeight));
+ 					backSprite.setTexture(backTexture);
+ 					selection = false;
+                }
+            	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+            	{
+            		if (selection)
+            			return 2;
+            		else
+            			return (-1);
+            	}
+
+        		break;
+
         	}
         }
 
 
 
-
+/*
         switch (prevState)
         {
         	case 0:
@@ -91,7 +115,7 @@ int menu::Run(sf::RenderWindow &window)
                 break;
 
         	}
-
+*/
         // draw
         window.clear();
         window.draw(backSprite);
