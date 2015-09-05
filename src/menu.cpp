@@ -66,56 +66,6 @@ int menu::Run(sf::RenderWindow &window)
         	}
         }
 
-
-
-/*
-        switch (prevState)
-        {
-        	case 0:
-
-        		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-                {
-                	backSprite.setTextureRect(sf::IntRect(1920, 0, resWidth, resHeight));
- 					backSprite.setTexture(backTexture);
- 					prevState = 1;
-                }
-                break;
-
-
-            case 1:
-
-            	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
-            	{
-            		return 2;
-            	}
-
-            	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-                {
-                	backSprite.setTextureRect(sf::IntRect(3840, 0, resWidth, resHeight));
- 					backSprite.setTexture(backTexture);
- 					prevState = 2;
-                }
-
-                break;
-
-
-           	case 2:
-
-            	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
-            	{
-            		return (-1);
-            	}
-
-            	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-                {
-                	backSprite.setTextureRect(sf::IntRect(1920, 0, resWidth, resHeight));
- 					backSprite.setTexture(backTexture);
- 					prevState = 1;
-                }
-                break;
-
-        	}
-*/
         // draw
         window.clear();
         window.draw(backSprite);
