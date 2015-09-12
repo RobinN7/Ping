@@ -28,6 +28,8 @@ class Menu : public cScreen
 
     	Menu();
     	virtual int Run(sf::RenderWindow &window);
+
+    	virtual ~Menu();
 };
 
 

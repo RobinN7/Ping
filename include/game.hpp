@@ -28,6 +28,8 @@ class Game : public cScreen
 
     	Game();
     	virtual int Run(sf::RenderWindow &window);
+
+    	virtual ~Game();
 };
 
 

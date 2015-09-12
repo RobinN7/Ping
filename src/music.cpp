@@ -7,11 +7,23 @@
 
 #include "../include/music.hpp"
 
-GameMusic::GameMusic() : sf::Music()
+GameMusic::GameMusic(unsigned char screenNumber) : sf::Music()
 {
-	if (!this->openFromFile("sound/music.wav"))
- 		std::cout<<"Error opening music.wav";
- 	
+	switch (screenNumber)
+	{
+	case 0:
+		if (!this->openFromFile("sound/splashMusic.wav"))
+	 		std::cout<<"Error opening splashMusic.wav";
+		break;
+	case 1:
+		if (!this->openFromFile("sound/menuMusic.wav"))
+	 		std::cout<<"Error opening menuMusic.wav";
+		break;
+	case 2:
+		if (!this->openFromFile("sound/gameMusic.wav"))
+	 		std::cout<<"Error opening gameMusic.wav";
+		break;
+	}
 	this->setLoop(true);
 	this->play();
 }

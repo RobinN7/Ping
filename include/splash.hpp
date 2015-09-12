@@ -19,6 +19,8 @@ class splashScreen : public cScreen
 	public:
 		splashScreen();
 		virtual int Run(sf::RenderWindow &window);
+
+    	virtual ~splashScreen();
 };
 
 

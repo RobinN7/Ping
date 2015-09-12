@@ -5,6 +5,9 @@ splashScreen::splashScreen()
 {
 }
 
+splashScreen::~splashScreen()
+{
+}
 
 int splashScreen::Run(sf::RenderWindow &window)
 {
@@ -13,6 +16,8 @@ int splashScreen::Run(sf::RenderWindow &window)
 
 	int resWidth = 1920;
 	int resHeight = 1080;
+
+	GameMusic music(0);
 
 	sf::Texture backTexture;
 	if (!backTexture.loadFromFile("img/ping.png"))

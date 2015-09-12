@@ -13,6 +13,11 @@ Game::Game()
 	
 }
 
+Game::~Game()
+{
+
+}
+
 int Game::Run(sf::RenderWindow &window)
 {
 
@@ -26,7 +31,7 @@ int Game::Run(sf::RenderWindow &window)
 	sf::Clock clock;
 	sf::Time millis = clock.getElapsedTime();
 
-	GameMusic music;
+	GameMusic music(2);
 
     sf::SoundBuffer buffer;
     if (!buffer.loadFromFile("sound/blblbl.wav"))
@@ -77,6 +82,11 @@ int Game::Run(sf::RenderWindow &window)
         	case sf::Event::Closed:
                 return(-1);
                 break;
+
+        	case sf::Event::KeyPressed:
+					if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+							return (1);
+					break;
         	}
         }
         
@@ -138,10 +148,9 @@ int Game::Run(sf::RenderWindow &window)
 			noKeyWasPressed = false;
 		}
 
-		if (pressedKey!=lastPressedKey)
+		if (pressedKey!=lastPressedKey && (pressedKey=='L' || pressedKey=='R'))
 		{
 			player.speed->x = 0;
-			player.speed->y = 0;
 		}
 
 		if (noKeyWasPressed)
@@ -154,7 +163,7 @@ int Game::Run(sf::RenderWindow &window)
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		{
 			if(player.position->y>0)
-				player.speed->y = -1000;
+				player.speed->y = -500;
 		}
 
 		if(!(0<player.position->x<5*resWidth))

@@ -14,7 +14,7 @@
 class GameMusic : public sf::Music
 {
     public:
-    GameMusic();
+    GameMusic(unsigned char);
 };
 
 

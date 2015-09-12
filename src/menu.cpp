@@ -8,6 +8,11 @@ Menu::Menu()
 	
 }
 
+Menu::~Menu()
+{
+
+}
+
 int Menu::Run(sf::RenderWindow &window)
 {
 
@@ -15,6 +20,8 @@ int Menu::Run(sf::RenderWindow &window)
 
 	int resWidth = 1920;
 	int resHeight = 1080;
+
+	GameMusic music(1);
 
 	sf::Texture backTexture;
 	if (!backTexture.loadFromFile("img/menu.png"))
