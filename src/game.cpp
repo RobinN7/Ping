@@ -33,11 +33,19 @@ int Game::Run(sf::RenderWindow &window)
 
 	GameMusic music(2);
 
-    sf::SoundBuffer buffer;
-    if (!buffer.loadFromFile("sound/blblbl.wav"))
- 		std::cout<<"Error opening music.wav";
+    sf::SoundBuffer buffer1;
+    sf::SoundBuffer buffer2;
+
+    if (!buffer1.loadFromFile("sound/blblblSound.wav"))
+ 		std::cout<<"Error opening blblblSound.wav";
     sf::Sound blblblSound;
-    blblblSound.setBuffer(buffer);
+    blblblSound.setBuffer(buffer1);
+
+    if (!buffer2.loadFromFile("sound/jumpSound.wav"))
+ 		std::cout<<"Error opening jumpSound.wav";
+    sf::Sound jumpSound;
+    jumpSound.setVolume(40.f);
+    jumpSound.setBuffer(buffer2);
 
 	sf::View view(sf::Vector2f(resWidth/2, resHeight/2), sf::Vector2f(resWidth, resHeight));
 	window.setView(view);
@@ -85,7 +93,9 @@ int Game::Run(sf::RenderWindow &window)
 
         	case sf::Event::KeyPressed:
 					if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-							return (1);
+						return(1);
+					if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+						jumpSound.play();
 					break;
         	}
         }
@@ -95,10 +105,13 @@ int Game::Run(sf::RenderWindow &window)
 		
         window.setView(view);
 
+        player.speed->y += 30;
+/*
 		if(player.position->y<resHeight-40)
 			player.speed->y += 10;
 		else
 			player.speed->y = 0;
+*/
 /*
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
@@ -116,14 +129,10 @@ int Game::Run(sf::RenderWindow &window)
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
 			player.currentAnimation = player.walkingAnimationDown;
-
-			if(player.position->y<resHeight-40)
-				player.speed->y += (player.speed->y<5000)*10;
-			else
-				player.speed->y = 0;
-
+			player.speed->y += (player.speed->y<5000)*20;
 			pressedKey='D';
 			noKeyWasPressed = false;
+			blblblSound.play();
 		}
 
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
@@ -131,8 +140,7 @@ int Game::Run(sf::RenderWindow &window)
 			player.currentAnimation = player.walkingAnimationLeft;
 
 			if(player.position->x>0)
-				player.speed->x -= (player.speed->x>-5000)*10;
-
+				player.speed->x -= (player.speed->x>-5000)*20;
 			pressedKey='L';
 			noKeyWasPressed = false;
 		}
@@ -142,17 +150,15 @@ int Game::Run(sf::RenderWindow &window)
 			player.currentAnimation = player.walkingAnimationRight;
 
 			if(player.position->x<5*resWidth)
-				player.speed->x += (player.speed->x<5000)*10;
+				player.speed->x += (player.speed->x<5000)*20;
 
 			pressedKey='R';
 			noKeyWasPressed = false;
 		}
-
+/*
 		if (pressedKey!=lastPressedKey && (pressedKey=='L' || pressedKey=='R'))
-		{
 			player.speed->x = 0;
-		}
-
+*/
 		if (noKeyWasPressed)
 		{
 			player.currentAnimation = player.idleAnimation;
@@ -161,18 +167,8 @@ int Game::Run(sf::RenderWindow &window)
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		{
 			if(player.position->y>0)
-				player.speed->y = -500;
-		}
-
-		if(!(0<player.position->x<5*resWidth))
-			player.speed->x = 0;
-
-
-		player.position->x=animatedSprite.getPosition().x;
-		player.position->y=animatedSprite.getPosition().y;
-
+				player.speed->y = -800;
 
 
 		lastPressedKey=pressedKey;
@@ -181,9 +177,23 @@ int Game::Run(sf::RenderWindow &window)
         animatedSprite.play(*player.currentAnimation);
         animatedSprite.move(*player.speed * frameTime.asSeconds());
 
+		player.position->x=animatedSprite.getPosition().x;
+		player.position->y=animatedSprite.getPosition().y;
+
+		while ((player.position->x<32) || (player.position->x>resWidth-32) || (player.position->y>resHeight-32))
+		{
+			animatedSprite.move(-*player.speed * frameTime.asSeconds());
+			if ((player.position->x<32) || (player.position->x>resWidth-32)) player.speed->x/=2;
+			if (player.position->y>resHeight-32) player.speed->y/=2;
+			animatedSprite.move(*player.speed * frameTime.asSeconds());
+
+			player.position->x=animatedSprite.getPosition().x;
+			player.position->y=animatedSprite.getPosition().y;
+		}
+
+
         // update AnimatedSprite
         animatedSprite.update(frameTime);
-
 
         // draw
         window.clear();
