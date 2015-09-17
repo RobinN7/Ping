@@ -9,12 +9,24 @@
 #include "../include/splash.hpp"
 #include "../include/menu.hpp"
 
- #include "../include/screens.hpp"
+#include "../include/screens.hpp"
 
 int main()
 {
-	int resWidth = 1920;
-	int resHeight = 1080;
+	bool smallScreen = true;
+	int resWidth;
+	int resHeight;
+	if (smallScreen)
+	{
+		resWidth = 1366;
+		resHeight = 768;
+	}
+	else
+	{
+		resWidth = 1920;
+		resHeight = 1080;
+	}
+	
 
 	//Applications variables
     std::vector<cScreen*> Screens;
@@ -22,18 +34,18 @@ int main()
 
     //Window creation
     sf::Vector2i screenDimensions(resWidth,resHeight);
-	sf::RenderWindow window(sf::VideoMode(screenDimensions.x, screenDimensions.y),"Ping");
+	 sf::RenderWindow window(sf::VideoMode(screenDimensions.x, screenDimensions.y),"Ping");
 
     //Mouse cursor no more visible
     window.setMouseCursorVisible(false);
     window.setFramerateLimit(60);
 
     //Screens preparations
-    splashScreen splash1;
+    splashScreen splash1 = splashScreen(smallScreen);
     Screens.push_back(&splash1);
-    Menu menu1;
+    Menu menu1 = Menu(smallScreen);
     Screens.push_back(&menu1);
-    Game Jeu1;
+    Game Jeu1 = Game(smallScreen);
     Screens.push_back(&Jeu1);
 
     //Main loop

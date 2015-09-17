@@ -1,8 +1,9 @@
 
 #include "../include/splash.hpp"
 
-splashScreen::splashScreen()
+splashScreen::splashScreen(bool smallScreen)
 {
+	this->smallScreen = smallScreen;
 }
 
 splashScreen::~splashScreen()
@@ -14,14 +15,32 @@ int splashScreen::Run(sf::RenderWindow &window)
 
 	bool Running = true;
 
-	int resWidth = 1920;
-	int resHeight = 1080;
+	int resWidth;
+	int resHeight;
+	if (smallScreen)
+	{
+		resWidth = 1366;
+		resHeight = 768;
+	}
+	else
+	{
+		resWidth = 1920;
+		resHeight = 1080;
+	}
 
 	GameMusic music(0);
 
 	sf::Texture backTexture;
-	if (!backTexture.loadFromFile("img/ping.png"))
- 		std::cout<<"Error loading ping.png";
+	if (smallScreen)
+	{
+		if (!backTexture.loadFromFile("img/ping_small.png"))
+ 			std::cout<<"Error loading ping_small.png";
+	}
+	else
+	{
+		if (!backTexture.loadFromFile("img/ping.png"))
+ 			std::cout<<"Error loading ping.png";
+ 	}
  	backTexture.setSmooth(true);
  	
  	sf::Sprite backSprite;

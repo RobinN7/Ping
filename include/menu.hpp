@@ -21,15 +21,22 @@
 
 #include "../include/cscreen.hpp"
 
+using namespace std; //to put just "cout" instead of "std::cout" 
+
+
 
 class Menu : public cScreen
 {
     public:
-
-    	Menu();
+    	Menu(bool smallScreen);
     	virtual int Run(sf::RenderWindow &window);
 
     	virtual ~Menu();
+    	
+    private:
+    	bool smallScreen;
+    	int resWidth;
+		int resHeight;
 };
 
 

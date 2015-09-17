@@ -3,9 +3,19 @@
 
 #include "../include/menu.hpp"
 
-Menu::Menu()
+Menu::Menu(bool smallScreen)
 {
-	
+	this->smallScreen = smallScreen;
+	if (smallScreen)
+	{
+		resWidth = 1366;
+		resHeight = 768;
+	}
+	else
+	{
+		resWidth = 1920;
+		resHeight = 1080;
+	}
 }
 
 Menu::~Menu()
@@ -18,14 +28,19 @@ int Menu::Run(sf::RenderWindow &window)
 
 	bool Running = true;
 
-	int resWidth = 1920;
-	int resHeight = 1080;
-
 	GameMusic music(1);
 
 	sf::Texture backTexture;
-	if (!backTexture.loadFromFile("img/menu.png"))
- 		std::cout<<"Error loading menu.png";
+	if (smallScreen)
+	{
+		if (!backTexture.loadFromFile("img/menu_small.png"))
+ 			std::cout<<"Error loading menu_small.png";
+ 	}
+	else
+	{
+		if (!backTexture.loadFromFile("img/menu.png"))
+ 			std::cout<<"Error loading menu.png";
+ 	}
  	backTexture.setSmooth(true);
 
  	sf::Sprite backSprite;
@@ -50,15 +65,17 @@ int Menu::Run(sf::RenderWindow &window)
         	case sf::Event::KeyPressed:
         		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                 {
-                	backSprite.setTextureRect(sf::IntRect(1920, 0, resWidth, resHeight));
- 					backSprite.setTexture(backTexture);
- 					selection = true;
+                	// select the second picture of the row (play)
+                	backSprite.setTextureRect(sf::IntRect(resWidth, 0, resWidth, resHeight));
+ 						backSprite.setTexture(backTexture);
+ 						selection = true;
                 }
             	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
                 {
-                	backSprite.setTextureRect(sf::IntRect(3840, 0, resWidth, resHeight));
- 					backSprite.setTexture(backTexture);
- 					selection = false;
+                	// select the third picture of the row (quit)
+                	backSprite.setTextureRect(sf::IntRect(resWidth*2, 0, resWidth, resHeight));
+ 						backSprite.setTexture(backTexture);
+ 						selection = false;
                 }
             	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
             	{

@@ -17,10 +17,13 @@
 class splashScreen : public cScreen
 {
 	public:
-		splashScreen();
+		splashScreen(bool smallScreen);
 		virtual int Run(sf::RenderWindow &window);
 
     	virtual ~splashScreen();
+    	
+    private:
+    	bool smallScreen;
 };
 
 

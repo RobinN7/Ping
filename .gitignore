@@ -1,6 +1,8 @@
-ping
+# Executable
+pingGame
 
-src/*.o
+# Binary files
+bin
 
 # Makefile
 Makefile
